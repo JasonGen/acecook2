@@ -6,7 +6,11 @@ import com.spring.henallux.model.TraductionMaterielModel;
 import java.util.List;
 
 public interface TraductionMaterielDAO {
+
+
     TraductionMaterielModel find(Integer id);
 
     List<TraductionMaterielModel> findAll();
+
+    // String getTradLabelByArticle(Integer idMateriel, String codeLangue);
 }

@@ -352,7 +352,7 @@ Lightbox.prototype = {
 		}
 
 		// loop through all area tags
-		// todo: combine anchor & area tag loops
+
 		for (var i=0; i< areas.length; i++){
 			var area = areas[i];
 			

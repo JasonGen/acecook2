@@ -24,11 +24,11 @@
                 <li><a href="<spring:url value='/index'/>"><spring:message code="indexLink"/></a></li>
                 <li><a href="<spring:url value='/about'/>"><spring:message code="aboutUsLink"/></a></li>
                 <li><a href="<spring:url value='/products'/>"><spring:message code="cookingMaterialLink"/></a></li>
-                <c:if test="${empty currentUser.email}">
+                <c:if test="${empty currentUser.nom}">
                     <li><a href="<spring:url value='/myAccount'/>"><spring:message code="myAccountLink"/></a></li>
                     <li><a href="<spring:url value='/register'/>"><spring:message code="registerLink"/></a></li>
                 </c:if>
-                <c:if test="${not empty currentUser.email}">
+                <c:if test="${not empty currentUser.nom  }">
                     <li><a href="<spring:url value='/myAccount/disconnect' />"><spring:message code="disconnect"/></a>
                     </li>
                 </c:if>

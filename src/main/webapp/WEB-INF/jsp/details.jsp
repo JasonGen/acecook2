@@ -37,12 +37,7 @@
                         <form:button type="submit"><spring:message code="addToCart"/><img src="images/order_now.gif"
                                                                                           alt=""
                                                                                           border="0"/></a></form:button>
-                        <%--<form:button type="submit"><a class="more"><img src="images/order_now.gif" alt="" border="0" /></a></form:button>--%>
-                        <%--<form action ="/details/${materiel.idMateriel}" method="post" id="orderAction" modelAttribute="ligneCommande">--%>
-                        <%--&lt;%&ndash;<form:input path="prixReel" disabled="true"/>&ndash;%&gt;--%>
-                        <%--<form:input path="nombrePieces" type="number" />--%>
-                        <%--<form:button type="submit"><a class="more"><img src="images/order_now.gif" alt="" border="0" /></a></form:button>--%>
-                        <%--</form>--%>
+
                     </form:form>
                     <div class="clear"></div>
                 </div>
@@ -99,12 +94,5 @@
 
 </body>
 </html>
-<!--
-<script type="text/javascript">
 
-var tabber1 = new Yetii({
-id: 'demo'
-});
-
-</script>-->
 

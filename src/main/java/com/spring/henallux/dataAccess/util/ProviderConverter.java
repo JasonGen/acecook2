@@ -9,7 +9,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
-public class ProviderConverter {
+public class  ProviderConverter {
 
     public ClientModel clientEntityToModel(ClientEntity entity) {
         ClientModel clientModel = new ClientModel();
@@ -120,9 +120,6 @@ public class ProviderConverter {
         m.setPhoto(e.getPhoto());
         m.setPrix(e.getPrix());
         m.setQuantiteStock(e.getQuantiteStock());
-        /*
-        TODO : Setter les traductions de tout les produits
-         */
         return m;
     }
 

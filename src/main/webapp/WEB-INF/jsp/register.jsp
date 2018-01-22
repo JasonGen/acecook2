@@ -89,7 +89,12 @@
                         <form:label path="codePostal" class="contact"><strong><spring:message
                                 code="postalCode"/>:</strong></form:label>
                         <form:input path="codePostal" type="text" class="contact_input"/>
-                        <form:errors path="codePostal"/>
+                        <c:set var="domainZipErrors"> <form:errors path="codePostal"/></c:set>
+                        <c:if test="${not empty domainZipErrors}">
+                            <p><spring:message code="invalidZip"/></p>
+                        </c:if>
+
+
                     </div>
 
                     <div class="form_row">

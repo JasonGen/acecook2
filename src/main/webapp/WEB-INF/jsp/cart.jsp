@@ -3,6 +3,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <title>AceCooK - Cart</title>
 
 
@@ -15,30 +18,85 @@
       <div class="feat_prod_box_details">
         <table class="cart_table">
           <tr class="cart_title">
-            <td>Product name</td>
-            <td>Unit price</td>
-            <td>Qty</td>
-            <td>Total</td>
+            <td><spring:message code="productName"/></td>
+            <td><spring:message code="unitPrice"/></td>
+            <td><spring:message code="qty"/></td>
+            <td><spring:message code="totalP"/></td>
           </tr>
-
+*
           <c:forEach items = "${basket.products}" var = "product">
 
             <tr>
 
-
+              <td> NOM</td>
               <td>${product.value.prixReel} €</td>
               <td>${product.value.nombrePieces}</td>
               <td>${product.value.prixReel * product.value.nombrePieces} €</td>
+
+              <td><a  href="<spring:url value = '/cart/deleteArticle/${product.value.materiel.idMateriel}'/>">
+
+                <button ><img src="images/close.gif" /></button>
+              </a>
+              </td>
             </tr>
+
           </c:forEach>
           <tr>
             <td colspan="4" class="cart_total"><span class="red">TOTAL:</span></td>
-            <td> ${basket.prixTotalAchats()} €</td>
+              <td> ${basket.prixTotalAchats()} €</td>
           </tr>
         </table>
+          <c:set var="priceTotal" value="${basket.prixTotalAchats()}"  scope="session" />
 
-        <a href="#" class="continue">&lt; </a> <a href="<spring:url value = '/cart/confirmOrder'/>"><spring:message code="confirmOrder"/> &gt;</a> </div>
+         <a  href="<spring:url value = '/cart/confirmOrder'/>"><spring:message code="confirmOrder"/> &gt;</>
+      <div align="center">
 
+
+
+        <div id="paypal-button-container"></div>
+
+        <script>
+
+            paypal.Button.render({
+
+
+                env: 'sandbox', // sandbox | production
+
+                client: {
+                    sandbox: 'AZus5uBU7mJ4eO4f-OM4NRvVEBl8V8sciRaaVvUKc_wDPBlV6L_oSomWfwibaBE0FQ6KuIkzcJDO5-Sn',
+                    production: 'EOim2_njRQHU-IEsgkIThhhfKs66C-TlvfVYgpGeq8DGuUSUrpYiBxJuWg5q_1-LNrWxgA7GfEsdKwJg'
+                },
+
+                commit: true,
+
+                payment: function (data, actions) {
+
+                    return actions.payment.create({
+                        payment: {
+                            transactions: [
+                                {
+                                    amount: {total: '${priceTotal}', currency: 'EUR'}
+                                }
+                            ]
+                        }
+                    });
+                },
+
+                onAuthorize: function (data, actions) {
+
+                    // Make a call to the REST api to execute the payment
+                    return actions.payment.execute().then(function () {
+                        window.alert('Payment Complete!');
+                        window.location.href = '/acecook/cart/confirmOrder';
+                    });
+                }
+
+            }, '#paypal-button-container');
+        </script>
+
+
+      </div>
+      </div>
       <div class="clear"></div>
     </div>
     <!--end of left content-->

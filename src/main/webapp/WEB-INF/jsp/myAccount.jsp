@@ -23,12 +23,16 @@
                         <form:label path="email" class="contact"><strong><spring:message
                                 code="mail"/>:</strong></form:label>
                         <form:input path="email" type="text" class="contact_input"/>
+                        <form:errors path="email" class="required"/>
+
                     </div>
                     <div class="form_row">
                         <form:label path="password" class="contact"><strong><spring:message
                                 code="pw"/>:</strong></form:label>
                         <form:input path="password" type="password" class="contact_input"/>
+                        <form:errors path="email" class="required"/>
                     </div>
+
                     <div class="form_row">
                         <form:button type="submit" class="bouton" value="register">Login</form:button>
                     </div>

@@ -9,14 +9,19 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.validation.Valid;
+import java.util.Locale;
+
 import static com.spring.henallux.controller.Constants.ConstantsController.MYACCOUNT;
 import static com.spring.henallux.controller.Constants.ConstantsController.REDIRECT_HOME;
+import static com.spring.henallux.controller.Constants.ConstantsController.REDIRECT_MYACCOUNT;
 import static com.spring.henallux.controller.MyAccountController.BASKET;
 import static com.spring.henallux.controller.MyAccountController.CURRENT_USER;
 
@@ -54,7 +59,9 @@ public class MyAccountController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(Model model, @ModelAttribute(value = "loginForm") LoginForm loginForm, @ModelAttribute(value = CURRENT_USER) ClientModel currentUser) {
+    public String login(Model model, @ModelAttribute(value = "loginForm") LoginForm loginForm,
+                        @ModelAttribute(value = CURRENT_USER) ClientModel currentUser,
+                        SessionStatus sessionStatusfinal, final BindingResult errors, Locale locale) {
 
         String cryptedPassword = null;
 
@@ -65,11 +72,17 @@ public class MyAccountController {
         }
 
         currentUser = clientDAO.existForEmailAndPassword(loginForm.getEmail(), cryptedPassword);
-        if (currentUser == null) {
+        if (currentUser != null) {
+            model.addAttribute(CURRENT_USER, currentUser);
+            return REDIRECT_HOME;
+
+        }
+        else{
+            errors.rejectValue("email", "errorLogin.email");
             return MYACCOUNT;
         }
-        model.addAttribute(CURRENT_USER, currentUser);
-        return REDIRECT_HOME;
+
+
     }
 
     @RequestMapping(value = "disconnect", method = RequestMethod.GET)

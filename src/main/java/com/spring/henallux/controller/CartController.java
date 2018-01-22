@@ -51,15 +51,14 @@ public class CartController {
             achatModel.setClient(clientModel);
             achatModel.setDateAchat(new Date());
 
-            //on ajoute à la commande toutes les lignes de commandes qui se trouve dans notre panier.
             achatModel.setLigneCommandeModelList(basket.getProducts().values());
-            //Mise à jour des quantités de stock en DB
+//TODO : Régler la maj des stocks ici
             basket.getProducts().entrySet().forEach(v -> {
-                //Update le nombre de pièces restantes dans la DB pour ce matériel
+
                 materielDAO.updateStock(providerConverter.materielModelToEntity(v.getValue().getMateriel()));
             });
             achatDAO.save(achatModel);
-
+            basket.getProducts().clear();
             return REDIRECT_HOME;
         }
     }
@@ -67,12 +66,7 @@ public class CartController {
     @RequestMapping(value = "/deleteArticle/{id}", method = RequestMethod.GET)
     public String deleteArticle(Model model, @PathVariable("id") Integer idArticle, @ModelAttribute(value = BASKET) Basket basket) {
 
-        //Il ne faut pas oublier de réassignr le stock sinon perdu et de le sauvegarder en DB
-        // Pour cela, il faut ajouter une colonne en DB. 1:StockDeDepart 2:StockRestant
-        // pour rester cohérent et facilité le réasignement du stock
-        // On remove l'article du panier
         basket.getProducts().remove(idArticle);
-
-        return "integrated:cart";
+        return "redirect:/cart";
     }
 }

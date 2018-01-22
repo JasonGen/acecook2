@@ -15,6 +15,9 @@ import com.spring.henallux.dataAccess.DAO.ClientDAO;
 import com.spring.henallux.model.ClientModel;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.Locale;
+
+import static com.spring.henallux.controller.Constants.ConstantsController.*;
 import static com.spring.henallux.controller.MyAccountController.BASKET;
 
 
@@ -23,9 +26,6 @@ import static com.spring.henallux.controller.MyAccountController.BASKET;
 @SessionAttributes({MyAccountController.CURRENT_USER, BASKET})
 public class RegisterController {
 
-    private static final String HOME = "redirect:/index";
-    private static final String REGISTER_PAGE = "integrated:register";
-
     @ModelAttribute(value = "userForm")
     public ClientModel getUserForm() {
         return new ClientModel();
@@ -33,7 +33,7 @@ public class RegisterController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String home() {
-        return REGISTER_PAGE;
+        return REGISTER;
     }
 
     @Autowired
@@ -42,18 +42,18 @@ public class RegisterController {
     private CryptingPassword cryptingPassword;
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    public String createUser(@Valid @ModelAttribute(value = "userForm") ClientModel clientModel, final BindingResult errors) {
+    public String createUser( @ModelAttribute(value = "userForm") @Valid ClientModel clientModel, final BindingResult errors, Locale locale) {
         int error = 0;
         if (!errors.hasErrors()) {
             if (clientDAO.isEmailExist(clientModel.getEmail())) {
-                errors.rejectValue("emailExisting", "alreadyExist.email");
+                errors.rejectValue("email", "alreadyExist.email");
                 ++error;
-                return REGISTER_PAGE;
+                return REGISTER;
             }
             if (!clientModel.getMotDePasse().equals(clientModel.getConfirmationMotDePasse())) {
-                errors.rejectValue("confirmPassword", "notmatch.password");
+                errors.rejectValue("motDePasse", "notmatch.password");
                 ++error;
-                return REGISTER_PAGE;
+                return REGISTER;
             }
             if (error == 0) {
                 try {
@@ -64,9 +64,9 @@ public class RegisterController {
                 }
             }
         } else {
-            return REGISTER_PAGE;
+            return REGISTER;
         }
-        return HOME;
+        return REDIRECT_HOME;
     }
 
 

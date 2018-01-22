@@ -28,7 +28,7 @@ public class ClientModel implements Serializable {
     private String numTel;
 
     @Email
-    @Size(min = 5, max = 100)
+    @Size(min = 2, max = 100)
     @NotBlank
     private String email;
 
@@ -41,11 +41,11 @@ public class ClientModel implements Serializable {
     private Integer codePostal;
 
     @Pattern(regexp = "^[A-Za-z]+$")
-    @Size(min = 5, max = 30)
+    @Size(min = 2, max = 30)
     @NotBlank
     private String ville;
 
-    @Size(min = 5, max = 30)
+    @Size(min = 2, max = 30)
     @NotBlank
     private String rue;
 
@@ -57,9 +57,9 @@ public class ClientModel implements Serializable {
     @NotBlank
     private String motDePasse;
 
+    @Size(min = 2, max = 30)
+    @NotBlank
     private String confirmationMotDePasse;
-
-//	private List<AchatModel> listeAchats;
 
 
     public String getConfirmationMotDePasse() {

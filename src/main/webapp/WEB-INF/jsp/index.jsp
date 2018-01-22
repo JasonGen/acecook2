@@ -8,8 +8,6 @@
 </head>
 <body>
 
-<%--<div class="new_prod_box"> <a href="#">${productList[i.nomMateriel]}</a>--%>
-    <%--<div class="new_prod_bg"> <a href="<spring:url value ='/details/${product.idMateriel}' />"><img src="<spring:url value='/images/${productList[i.photo]}' />"--%>
 <div class="center_content">
   <div class="left_content">
     <div class="title"><span class="title_icon"></span><spring:message code="indexTitle"/></div>
